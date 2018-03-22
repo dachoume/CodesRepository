@@ -1,0 +1,41 @@
+import pymysql
+import json
+from pyecharts import Pie
+
+d1 = []
+d2 = []
+# 打开数据库连接
+conn = pymysql.connect(host='172.18.29.154', user='root', passwd='root', db='tianyun_test', port=3306, charset='utf8')
+
+# 使用cursor()方法获取操作游标
+cursor = conn.cursor()
+
+# SQL 查询语句
+sql = "select * from sex_count"
+try:
+    # 执行SQL语句
+    cursor.execute(sql)
+    # 获取所有记录列表
+    results = cursor.fetchall()
+    for row in results:
+        sex = row[0]
+        count = row[1]
+        d1.append(sex)
+        d2.append(count)
+        # 打印结果
+        # print("性别" + sex + "  数量" + str(count))
+except:
+    print("Error: unable to fetch data")
+
+# 生成json
+# json_d = json.dumps(d)
+# print(json_d)
+
+cursor.close()
+# 关闭数据库连接
+conn.close()
+
+pie = Pie("饼图示例")
+pie.add("", d1, d2, is_label_show=True)
+pie.render('test.html')
+
