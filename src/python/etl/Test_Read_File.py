@@ -5,3 +5,9 @@ while 1:
         break
     s =line.strip().split(' ')[0]
     print(s)
+print("================")
+
+with open("testfile") as file:
+    data = file.read()
+    print(data)
+print("读取完成")
