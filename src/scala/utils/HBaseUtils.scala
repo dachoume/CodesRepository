@@ -52,3 +52,7 @@ object HBaseUtils extends Serializable {
     }
 
 }
+
+=======================人工分割线=======================
+HBaseUtils.deleteRecord(HBaseManager.getHBaseManager.getConnection,"test1","cf1","age","888")
+HBaseUtils.deleteRecord(HBaseManager.getHBaseManager.getConnection,"test1","cf1","name","888")
