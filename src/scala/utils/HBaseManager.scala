@@ -33,3 +33,58 @@ object HBaseManager {
         hbaseManager
     }
 }
+
+=======================人工分割线=======================
+/**
+  * 测试用HBaseManager创建连接，并从HBase中取得单条信息
+  */
+object HBaseManagerTest {
+    def main(args: Array[String]): Unit = {
+        val conn: Connection = HBaseManager.getHBaseManager.getConnection
+        println("创建了连接")
+        try {
+            //获取 user 表
+            val table = conn.getTable(TableName.valueOf("test1"))
+            println(table)
+            println("获取了表")
+            try {
+
+                //查询某条数据
+                val g: Get = new Get("4".getBytes)
+                println(g)
+                val result = table.get(g)
+                println(result)
+                val value = Bytes.toString(result.getValue("cf1".getBytes, "age".getBytes))
+                println("4 :" + value)
+
+
+            } finally {
+                if (table != null) table.close()
+            }
+        } finally {
+            conn.close()
+        }
+
+
+
+        /*        def getAResult(connection: Connection, tablename: String, family: String, column: String, key: String): Unit = {
+                    var table: Table = null
+                    try {
+                        val userTable: TableName = TableName.valueOf(tablename)
+                        println(userTable)
+                        table = connection.getTable(userTable)
+                        val g = new Get(key.getBytes())
+                        val result = table.get(g)
+                        println(result)
+                        val value = Bytes.toString(result.getValue(family.getBytes(), column.getBytes()))
+                        println("key:" + value)
+                    } finally {
+                        if (table != null) table.close()
+
+                    }
+
+                }
+                getAResult(conn,"test1","cf1","name",4.toString)*/
+    }
+
+}
