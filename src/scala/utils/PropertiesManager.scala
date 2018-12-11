@@ -67,3 +67,6 @@ object PropertiesManager {
 
 
 }
+======================人工分割线======================
+println(PropertiesManager.getPropertiesManager.getPropertiesByPath("/Users/dxdou/DDWorking/test.properties", "a"))
+println(PropertiesManager.getPropertiesManager.getProperties("hbase.properties", "hbase.zookeeper.quorum"))
