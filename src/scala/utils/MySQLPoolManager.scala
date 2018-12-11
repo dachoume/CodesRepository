@@ -79,3 +79,33 @@ object MySQLPoolManager {
         mySQLPoolManager
     }
 }
+=======================人工分割线=======================
+object MySQLPoolManagerTest {
+    def main(args: Array[String]): Unit = {
+        val conn: Connection = MySQLPoolManager.getMysqlPoolManager.getConnection
+        val ps: PreparedStatement = conn.prepareStatement("select * from sex_count")
+        val rs: ResultSet = ps.executeQuery()
+        while (rs.next()) {
+            println(rs.getString("sex"))
+            println(rs.getInt("count"))
+        }
+
+        MySQLPoolManager.getMysqlPoolManager.closeSource(ps, conn)
+
+        //下面的测试需要把cpds的private去掉
+        //为了证明使用这种方法可以创建出线程安全的单例
+        //cpds才是单例的
+        //    val s1 = MySQLPoolManager.getMysqlPoolManager.cpds
+        //    val s2 = MySQLPoolManager.getMysqlPoolManager.cpds
+        //    println(s1)
+        //    println(s2)
+        //    println(s1==s2)
+        //    println(s1.equals(s2))
+        //
+        //    val t1 = new MySQLPoolManager
+        //    val t2 = new MySQLPoolManager
+        //    println(t1.cpds==t2.cpds)
+        //    println(t1.cpds.equals(t2.cpds))
+    }
+
+}
